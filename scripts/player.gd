@@ -77,11 +77,15 @@ var combo_count: int = 0
 @onready var wall_ray_back: RayCast3D = $WallRayBack
 @onready var dash_trail: GPUParticles3D = $DashTrail
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
+@onready var weapon_manager: Node = $Camera3D/WeaponHolder
 @onready var original_camera_y: float = 0.0
 
 func _ready() -> void:
     Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
     original_camera_y = camera.position.y
+    
+    # Register in player group for bullet kill tracking
+    add_to_group("player")
     
     # Ensure Global has style fields
     if not Global.has_method("add_style") and "player_style" not in Global:
@@ -103,6 +107,14 @@ func _input(event: InputEvent) -> void:
     # Glory kill
     if event.is_action_pressed("glory_kill") and not is_glory_killing:
         _attempt_glory_kill()
+    
+    # Shooting — delegate to weapon manager for semi-auto weapons
+    if event.is_action_pressed("shoot") and weapon_manager:
+        weapon_manager.fire_current()
+    
+    # Alt-fire — right mouse button
+    if event.is_action_pressed("alt_fire") and weapon_manager:
+        weapon_manager.alt_fire_current()
 
 
 func _physics_process(delta: float) -> void:

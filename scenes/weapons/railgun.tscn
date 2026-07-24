@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://railgun_scene"]
+
+[ext_resource type="Script" path="res://scripts/weapons/railgun.gd" id="1_railgun_script"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_weapon"]
+size = Vector3(0.07, 0.07, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="Material_weapon"]
+albedo_color = Color(0.15, 0.2, 0.3, 1.0)
+roughness = 0.15
+metallic = 1.0
+emission_enabled = true
+emission = Color(0.2, 0.4, 0.8, 1.0)
+emission_energy_multiplier = 2.0
+
+[node name="Railgun" type="Node3D"]
+script = ExtResource("1_railgun_script")
+
+[node name="WeaponMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.12, -0.65)
+mesh = SubResource("BoxMesh_weapon")
+surface_material_override/0 = SubResource("Material_weapon")
+
+[node name="MuzzlePoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.12, -1.05)
+
+[node name="MuzzleFlash" type="OmniLight3D" parent="."]
+visible = false
+light_energy = 5.0
+light_color = Color(0.3, 0.6, 1.0, 1.0)
+omni_range = 3.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.12, -1.05)
+
+[node name="FireSound" type="AudioStreamPlayer3D" parent="."]
+
+[node name="ReloadSound" type="AudioStreamPlayer3D" parent="."]

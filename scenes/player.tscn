@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://playerscene001"]
+[gd_scene load_steps=11 format=3 uid="uid://playerscene001"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_player_script"]
 [ext_resource type="Script" path="res://scripts/player_camera.gd" id="2_camera_script"]
+[ext_resource type="Script" path="res://scripts/weapons/weapon_manager.gd" id="3_weapon_manager_script"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.5
@@ -99,3 +100,7 @@ amount = 30
 lifetime = 0.3
 draw_pass_1 = SubResource("SphereMesh_trail")
 process_material = SubResource("ParticleProcessMaterial_trail")
+
+[node name="WeaponHolder" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.2, -0.5)
+script = ExtResource("3_weapon_manager_script")
