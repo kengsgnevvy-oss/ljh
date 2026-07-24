@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=3 uid="uid://levelscene001"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(30, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(30, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dark"]
+albedo_color = Color(0.15, 0.15, 0.2, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.1, 0.08, 0.08, 1)
+roughness = 0.7
+metallic = 0.3
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hell"]
+sky_top_color = Color(0.6, 0.05, 0.02, 1)
+sky_horizon_color = Color(0.3, 0.02, 0.01, 1)
+ground_horizon_color = Color(0.1, 0.02, 0.02, 1)
+ground_bottom_color = Color(0.05, 0.01, 0.01, 1)
+
+[sub_resource type="Sky" id="Sky_hell"]
+sky_material = SubResource("ProceduralSkyMaterial_hell")
+
+[sub_resource type="Environment" id="Environment_hell"]
+background_mode = 2
+sky = SubResource("Sky_hell")
+ambient_light_source = 3
+ambient_light_color = Color(0.3, 0.1, 0.05, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.4
+glow_bloom = 0.3
+adjustments_enabled = true
+adjustments_contrast = 1.15
+
+[node name="Level" type="Node3D"]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("StandardMaterial3D_floor")
+
+[node name="WallNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 15)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="WallSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -15)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="WallEast" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="WallWest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("StandardMaterial3D_dark")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+light_color = Color(0.9, 0.5, 0.3, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hell")

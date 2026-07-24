@@ -1,0 +1,32 @@
+# Godot 4 specific ignores
+.godot/
+*.import
+*.translation
+*.uid
+
+# Export folders
+export/
+exports/
+build/
+
+# Imported assets (auto-generated)
+.import/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Addon-specific
+addons/*/.gitignore

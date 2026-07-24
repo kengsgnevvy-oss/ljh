@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://uiscene001"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ui"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 60.0
+text = "HEALTH: 100"
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 28
+
+[node name="AmmoLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "AMMO: 30 / 30"
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 28
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 140.0
+text = "SCORE: 0"
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 24
+
+[node name="Crosshair" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CrosshairLabel" type="Label" parent="Crosshair"]
+layout_mode = 2
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(1, 1, 1, 0.7)
+theme_override_font_sizes/font_size = 32
