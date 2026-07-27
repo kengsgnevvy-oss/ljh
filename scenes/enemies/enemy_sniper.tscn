@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://enemy_sniper_scene"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_sniper.gd" id="1_sniper_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_sniper"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sniper"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_sniper"]
+albedo_color = Color(0.8, 0.8, 0.1, 1)
+emission_enabled = true
+emission = Color(0.3, 0.3, 0, 1)
+
+[node name="Sniper" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_sniper_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_sniper")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_sniper")
+surface_material_override/0 = SubResource("Material_sniper")

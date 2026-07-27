@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://enemy_berserker_scene"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_berserker.gd" id="1_berserker_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_berserker"]
+size = Vector3(1.2, 2, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_berserker"]
+size = Vector3(1.2, 2, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Material_berserker"]
+albedo_color = Color(1.0, 0.4, 0.0, 1)
+emission_enabled = true
+emission = Color(0.5, 0.2, 0, 1)
+
+[node name="Berserker" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_berserker_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_berserker")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_berserker")
+surface_material_override/0 = SubResource("Material_berserker")

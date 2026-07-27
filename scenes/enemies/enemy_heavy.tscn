@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://enemy_heavy_scene"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_heavy.gd" id="1_heavy_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_heavy"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_heavy"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="StandardMaterial3D" id="Material_heavy"]
+albedo_color = Color(0.5, 0.05, 0.05, 1)
+emission_enabled = true
+emission = Color(0.2, 0, 0, 1)
+
+[node name="Heavy" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_heavy_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_heavy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_heavy")
+surface_material_override/0 = SubResource("Material_heavy")

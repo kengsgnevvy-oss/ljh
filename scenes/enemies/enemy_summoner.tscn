@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://enemy_summoner_scene"]
+
+[ext_resource type="Script" path="res://scripts/enemies/enemy_summoner.gd" id="1_summoner_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_summoner"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_summoner"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_summoner"]
+albedo_color = Color(0.1, 0.8, 0.1, 1)
+emission_enabled = true
+emission = Color(0, 0.3, 0, 1)
+
+[node name="Summoner" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_summoner_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_summoner")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_summoner")
+surface_material_override/0 = SubResource("Material_summoner")
