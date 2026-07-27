@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://boss_arena_scene"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_arena_floor"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arena_floor"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="StandardMaterial3D" id="Material_arena_floor"]
+albedo_color = Color(0.15, 0.15, 0.15, 1)
+metallic = 0.5
+roughness = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_arena_wall"]
+size = Vector3(0.5, 4, 40)
+
+[sub_resource type="StandardMaterial3D" id="Material_arena_wall"]
+albedo_color = Color(0.2, 0.05, 0.05, 1)
+emission_enabled = true
+emission = Color(0.1, 0, 0, 1)
+
+[node name="BossArena" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape_arena_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_arena_floor")
+surface_material_override/0 = SubResource("Material_arena_floor")
+
+[node name="Barriers" type="Node3D" parent="."]
+
+[node name="WallNorth" type="StaticBody3D" parent="Barriers"]
+position = Vector3(0, 2, -20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Barriers/WallNorth"]
+shape = SubResource("BoxShape_arena_wall")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Barriers/WallNorth"]
+mesh = SubResource("BoxMesh_arena_wall")
+surface_material_override/0 = SubResource("Material_arena_wall")
+
+[node name="WallSouth" type="StaticBody3D" parent="Barriers"]
+position = Vector3(0, 2, 20)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Barriers/WallSouth"]
+shape = SubResource("BoxShape_arena_wall")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Barriers/WallSouth"]
+mesh = SubResource("BoxMesh_arena_wall")
+surface_material_override/0 = SubResource("Material_arena_wall")
+
+[node name="WallEast" type="StaticBody3D" parent="Barriers"]
+position = Vector3(20, 2, 0)
+rotation = Vector3(0, 1.5708, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Barriers/WallEast"]
+shape = SubResource("BoxShape_arena_wall")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Barriers/WallEast"]
+mesh = SubResource("BoxMesh_arena_wall")
+surface_material_override/0 = SubResource("Material_arena_wall")
+
+[node name="WallWest" type="StaticBody3D" parent="Barriers"]
+position = Vector3(-20, 2, 0)
+rotation = Vector3(0, 1.5708, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Barriers/WallWest"]
+shape = SubResource("BoxShape_arena_wall")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Barriers/WallWest"]
+mesh = SubResource("BoxMesh_arena_wall")
+surface_material_override/0 = SubResource("Material_arena_wall")
+
+[node name="ArenaCenter" type="Marker3D" parent="."]

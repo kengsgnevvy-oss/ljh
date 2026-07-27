@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://boss_hell_mech_scene"]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_hell_mech.gd" id="1_boss_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_hellmech"]
+size = Vector3(4, 6, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hellmech"]
+size = Vector3(4, 6, 4)
+
+[sub_resource type="StandardMaterial3D" id="Material_hellmech"]
+albedo_color = Color(0.2, 0.2, 0.25, 1)
+metallic = 0.8
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.5, 0.2, 0, 1)
+
+[node name="HellMech" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_boss_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_hellmech")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_hellmech")
+surface_material_override/0 = SubResource("Material_hellmech")
