@@ -1,0 +1,238 @@
+[gd_scene load_steps=20 format=3 uid="uid://level3_hell_forge"]
+
+[ext_resource type="PackedScene" uid="uid://enemy_soldier_scene" path="res://scenes/enemies/enemy_soldier.tscn" id="1_soldier"]
+[ext_resource type="PackedScene" uid="uid://enemy_heavy_scene" path="res://scenes/enemies/enemy_heavy.tscn" id="2_heavy"]
+[ext_resource type="PackedScene" uid="uid://enemy_summoner_scene" path="res://scenes/enemies/enemy_summoner.tscn" id="3_summoner"]
+[ext_resource type="PackedScene" uid="uid://boss_hell_mech_scene" path="res://scenes/enemies/boss_hell_mech.tscn" id="4_boss"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(35, 25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_long"]
+size = Vector3(35, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall_short"]
+size = Vector3(25, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_conveyor"]
+size = Vector3(8, 0.3, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_piston"]
+size = Vector3(1, 3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_anvil"]
+size = Vector3(3, 2, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.15, 0.1, 0.05, 1)
+roughness = 0.5
+metallic = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_wall"]
+albedo_color = Color(0.2, 0.12, 0.06, 1)
+roughness = 0.6
+metallic = 0.7
+emission_enabled = true
+emission = Color(0.08, 0.04, 0.01, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_conveyor"]
+albedo_color = Color(0.25, 0.15, 0.08, 1)
+roughness = 0.3
+metallic = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_piston"]
+albedo_color = Color(0.3, 0.18, 0.05, 1)
+roughness = 0.4
+metallic = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_lava"]
+albedo_color = Color(1.0, 0.4, 0.05, 1)
+roughness = 0.2
+emission_enabled = true
+emission = Color(1.0, 0.5, 0.1, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_l3"]
+sky_top_color = Color(0.3, 0.1, 0.02, 1)
+sky_horizon_color = Color(0.15, 0.05, 0.01, 1)
+ground_horizon_color = Color(0.2, 0.08, 0.03, 1)
+ground_bottom_color = Color(0.08, 0.03, 0.01, 1)
+
+[sub_resource type="Sky" id="Sky_l3"]
+sky_material = SubResource("SkyMat_l3")
+
+[sub_resource type="Environment" id="Env_l3"]
+background_mode = 2
+sky = SubResource("Sky_l3")
+ambient_light_source = 3
+ambient_light_color = Color(0.25, 0.12, 0.05, 1)
+ambient_light_energy = 0.45
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.6
+glow_bloom = 0.5
+fog_enabled = true
+fog_mode = 1
+fog_density = 0.01
+fog_light_color = Color(0.9, 0.4, 0.08, 1)
+adjustments_enabled = true
+adjustments_contrast = 1.15
+
+[node name="Level3" type="Node3D"]
+
+; --- FLOOR ---
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+; --- WALLS ---
+[node name="WallNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 12.5)
+mesh = SubResource("BoxMesh_wall_long")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -12.5)
+mesh = SubResource("BoxMesh_wall_long")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallEast" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 2.5, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall_short")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallWest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 2.5, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall_short")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- CONVEYOR BELTS ---
+[node name="Conveyor1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.4, 8)
+mesh = SubResource("BoxMesh_conveyor")
+surface_material_override/0 = SubResource("Mat_conveyor")
+
+[node name="Conveyor2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.4, -6)
+mesh = SubResource("BoxMesh_conveyor")
+surface_material_override/0 = SubResource("Mat_conveyor")
+
+[node name="Conveyor3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.4, 0)
+mesh = SubResource("BoxMesh_conveyor")
+surface_material_override/0 = SubResource("Mat_conveyor")
+
+; --- PISTONS ---
+[node name="Piston1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 1.5, 5)
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_piston")
+
+[node name="Piston2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1.5, -5)
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_piston")
+
+[node name="Piston3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1.5, -8)
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_piston")
+
+[node name="Piston4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 1.5, 8)
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_piston")
+
+; --- ANVILS ---
+[node name="Anvil1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -10)
+mesh = SubResource("BoxMesh_anvil")
+surface_material_override/0 = SubResource("Mat_conveyor")
+
+; --- LAVA POOLS ---
+[node name="LavaPool1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.02, -3)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_lava")
+
+; --- SECRET: behind piston - shotgun ---
+[node name="SecretNook" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.5, 7)
+
+[node name="ShotgunPickup" type="Area3D" parent="SecretNook"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="ShotgunMesh" type="MeshInstance3D" parent="SecretNook/ShotgunPickup"]
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_lava")
+
+[node name="ShotgunCollision" type="CollisionShape3D" parent="SecretNook/ShotgunPickup"]
+shape = SubResource("BoxMesh_piston")
+
+; --- EXIT PORTAL ---
+[node name="ExitPortal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 1.5, 0)
+visible = false
+monitoring = false
+monitorable = false
+
+[node name="PortalMesh" type="MeshInstance3D" parent="ExitPortal"]
+mesh = SubResource("BoxMesh_piston")
+surface_material_override/0 = SubResource("Mat_lava")
+
+[node name="PortalCollision" type="CollisionShape3D" parent="ExitPortal"]
+shape = SubResource("BoxMesh_piston")
+
+; --- PLAYER SPAWN ---
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 1.5, -2)
+
+; --- ENEMIES ---
+[node name="Soldier1" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 6)
+
+[node name="Soldier2" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -4)
+
+[node name="Soldier3" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -2)
+
+[node name="Heavy1" parent="." instance=ExtResource("2_heavy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, -6)
+
+[node name="Heavy2" parent="." instance=ExtResource("2_heavy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, 4)
+
+[node name="Summoner1" parent="." instance=ExtResource("3_summoner")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
+
+; --- BOSS ---
+[node name="HellMech" parent="." instance=ExtResource("4_boss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.5, -2)
+
+; --- LIGHTING ---
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+light_color = Color(1.0, 0.5, 0.15, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+light_color = Color(1.0, 0.5, 0.1, 1)
+light_energy = 2.5
+omni_range = 22.0
+omni_attenuation = 0.4
+
+[node name="OmniLight3D_2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -8)
+light_color = Color(1.0, 0.4, 0.05, 1)
+light_energy = 2.0
+omni_range = 15.0
+omni_attenuation = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_l3")

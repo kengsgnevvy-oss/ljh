@@ -1,0 +1,252 @@
+[gd_scene load_steps=19 format=3 uid="uid://level4_tower_of_sins"]
+
+[ext_resource type="PackedScene" uid="uid://enemy_soldier_scene" path="res://scenes/enemies/enemy_soldier.tscn" id="1_soldier"]
+[ext_resource type="PackedScene" uid="uid://enemy_flier_scene" path="res://scenes/enemies/enemy_flier.tscn" id="2_flier"]
+[ext_resource type="PackedScene" uid="uid://enemy_berserker_scene" path="res://scenes/enemies/enemy_berserker.tscn" id="3_berserker"]
+[ext_resource type="PackedScene" uid="uid://enemy_elite_scene" path="res://scenes/enemies/enemy_elite.tscn" id="4_elite"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(20, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(20, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ramp"]
+size = Vector3(3, 0.3, 8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+size = Vector3(0.6, 1.5, 0.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(6, 0.3, 6)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.08, 0.06, 0.12, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_wall"]
+albedo_color = Color(0.1, 0.08, 0.15, 1)
+roughness = 0.6
+metallic = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_bonus"]
+albedo_color = Color(0.8, 0.7, 0.1, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(0.5, 0.4, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_l4"]
+sky_top_color = Color(0.08, 0.02, 0.15, 1)
+sky_horizon_color = Color(0.05, 0.01, 0.1, 1)
+ground_horizon_color = Color(0.02, 0.0, 0.05, 1)
+ground_bottom_color = Color(0.0, 0.0, 0.02, 1)
+
+[sub_resource type="Sky" id="Sky_l4"]
+sky_material = SubResource("SkyMat_l4")
+
+[sub_resource type="Environment" id="Env_l4"]
+background_mode = 2
+sky = SubResource("Sky_l4")
+ambient_light_source = 3
+ambient_light_color = Color(0.12, 0.06, 0.2, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.4
+glow_bloom = 0.3
+fog_enabled = true
+fog_mode = 1
+fog_density = 0.006
+fog_light_color = Color(0.3, 0.1, 0.5, 1)
+adjustments_enabled = true
+adjustments_contrast = 1.1
+
+[node name="Level4" type="Node3D"]
+
+; --- FLOOR (Ground Level - Floor 1) ---
+[node name="Floor_Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+; --- WALLS ---
+[node name="Wall_Ground_N" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_Ground_S" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_Ground_E" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_Ground_W" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- FLOOR 2 ---
+[node name="Floor2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+[node name="Wall_F2_N" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F2_S" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F2_E" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 8, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F2_W" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 8, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- FLOOR 3 ---
+[node name="Floor3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+[node name="Wall_F3_N" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, 10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F3_S" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14, -10)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F3_E" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 14, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Wall_F3_W" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 14, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- FLOOR 4 (Roof) ---
+[node name="Floor4_Roof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+; --- RAMP 1->2 ---
+[node name="Ramp1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.6, 0.8, 0, -0.8, 0.6, -8, 3, -6)
+mesh = SubResource("BoxMesh_ramp")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- RAMP 2->3 ---
+[node name="Ramp2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.6, 0.8, 0, -0.8, 0.6, 6, 9, 6)
+mesh = SubResource("BoxMesh_ramp")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- RAMP 3->4 ---
+[node name="Ramp3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.6, 0.8, 0, -0.8, 0.6, -6, 15, -4)
+mesh = SubResource("BoxMesh_ramp")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- SECRETS: bonus pickups in corners of each floor ---
+[node name="BonusF1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.5, 8)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_bonus")
+
+[node name="BonusF2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 6.5, -8)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_bonus")
+
+[node name="BonusF3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 12.5, -8)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_bonus")
+
+[node name="BonusF4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 18.5, 8)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_bonus")
+
+; --- EXIT PORTAL (on roof) ---
+[node name="ExitPortal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19, 0)
+visible = false
+monitoring = false
+monitorable = false
+
+[node name="PortalMesh" type="MeshInstance3D" parent="ExitPortal"]
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_bonus")
+
+[node name="PortalCollision" type="CollisionShape3D" parent="ExitPortal"]
+shape = SubResource("BoxMesh_pillar")
+
+; --- PLAYER SPAWN ---
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+
+; --- ENEMIES ---
+[node name="Soldier1" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 5)
+
+[node name="Soldier2" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -3)
+
+[node name="Soldier3" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 7, 2)
+
+[node name="Flier1" parent="." instance=ExtResource("2_flier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 10, -5)
+
+[node name="Flier2" parent="." instance=ExtResource("2_flier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 16, 4)
+
+[node name="Berserker" parent="." instance=ExtResource("3_berserker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 7, -5)
+
+[node name="Elite" parent="." instance=ExtResource("4_elite")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 19, -2)
+
+; --- LIGHTING ---
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 25, 0)
+light_color = Color(0.3, 0.15, 0.5, 1)
+light_energy = 1.5
+shadow_enabled = true
+
+[node name="OmniLight_Center" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+light_color = Color(0.3, 0.15, 0.6, 1)
+light_energy = 3.0
+omni_range = 30.0
+omni_attenuation = 0.3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_l4")

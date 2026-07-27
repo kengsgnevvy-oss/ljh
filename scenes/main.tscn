@@ -1,11 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://mainscene001"]
 
-[ext_resource type="PackedScene" uid="uid://levelscene001" path="res://scenes/level.tscn" id="1_level"]
-[ext_resource type="PackedScene" uid="uid://playerscene001" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/main_bootstrap.gd" id="1_bootstrap"]
 
-[node name="Main" type="Node3D"]
+[sub_resource type="Environment" id="Env_default"]
+background_mode = 1
+background_color = Color(0, 0, 0, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.15, 0.1, 0.08, 1)
+ambient_light_energy = 0.5
 
-[node name="Level" parent="." instance=ExtResource("1_level")]
+[node name="Main" type="Node"]
 
-[node name="Player" parent="." instance=ExtResource("2_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+[node name="Bootstrap" type="Node" parent="."]
+script = ExtResource("1_bootstrap")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_default")

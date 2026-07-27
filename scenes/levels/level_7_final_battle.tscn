@@ -1,0 +1,230 @@
+[gd_scene load_steps=19 format=3 uid="uid://level7_final_battle"]
+
+[ext_resource type="PackedScene" uid="uid://boss_final_scene" path="res://scenes/enemies/boss_final.tscn" id="1_boss"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(40, 40)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(40, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar_broken"]
+size = Vector3(1.2, 3, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rubble"]
+size = Vector3(2, 0.8, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cracked_floor"]
+size = Vector3(5, 0.05, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(6, 0.3, 6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_portal_frame"]
+size = Vector3(3, 5, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.08, 0.05, 0.05, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_wall"]
+albedo_color = Color(0.1, 0.06, 0.06, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_cracked"]
+albedo_color = Color(0.15, 0.08, 0.03, 1)
+roughness = 0.8
+emission_enabled = true
+emission = Color(0.3, 0.1, 0.0, 1)
+emission_energy_multiplier = 1.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_portal"]
+albedo_color = Color(0.2, 0.8, 0.3, 0.5)
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.3, 1.0, 0.4, 1)
+emission_energy_multiplier = 5.0
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_l7"]
+sky_top_color = Color(0.4, 0.02, 0.02, 1)
+sky_horizon_color = Color(0.2, 0.01, 0.01, 1)
+ground_horizon_color = Color(0.05, 0.01, 0.01, 1)
+ground_bottom_color = Color(0.02, 0.0, 0.0, 1)
+
+[sub_resource type="Sky" id="Sky_l7"]
+sky_material = SubResource("SkyMat_l7")
+
+[sub_resource type="Environment" id="Env_l7"]
+background_mode = 2
+sky = SubResource("Sky_l7")
+ambient_light_source = 3
+ambient_light_color = Color(0.2, 0.06, 0.04, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.7
+glow_bloom = 0.6
+fog_enabled = true
+fog_mode = 1
+fog_density = 0.004
+fog_light_color = Color(0.5, 0.08, 0.03, 1)
+adjustments_enabled = true
+adjustments_contrast = 1.25
+
+[node name="Level7" type="Node3D"]
+
+; --- FLOOR (cracked/crumbling) ---
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+; --- CRACKED FLOOR SECTIONS ---
+[node name="CrackSection1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.05, -10)
+mesh = SubResource("BoxMesh_cracked_floor")
+surface_material_override/0 = SubResource("Mat_cracked")
+
+[node name="CrackSection2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0.05, 8)
+mesh = SubResource("BoxMesh_cracked_floor")
+surface_material_override/0 = SubResource("Mat_cracked")
+
+[node name="CrackSection3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.05, 12)
+mesh = SubResource("BoxMesh_cracked_floor")
+surface_material_override/0 = SubResource("Mat_cracked")
+
+[node name="CrackSection4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.05, -12)
+mesh = SubResource("BoxMesh_cracked_floor")
+surface_material_override/0 = SubResource("Mat_cracked")
+
+; --- WALLS ---
+[node name="WallNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 20)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -20)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallEast" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 2.5, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallWest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 2.5, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- BROKEN PILLARS ---
+[node name="BrokenPillar1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1.5, 15)
+mesh = SubResource("BoxMesh_pillar_broken")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="BrokenPillar2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1.5, -15)
+mesh = SubResource("BoxMesh_pillar_broken")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="BrokenPillar3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 1.5, -15)
+mesh = SubResource("BoxMesh_pillar_broken")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="BrokenPillar4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1.5, 15)
+mesh = SubResource("BoxMesh_pillar_broken")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- RUBBLE ---
+[node name="Rubble1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0.3, 8)
+mesh = SubResource("BoxMesh_rubble")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Rubble2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.3, -8)
+mesh = SubResource("BoxMesh_rubble")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Rubble3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 0.3, -5)
+mesh = SubResource("BoxMesh_rubble")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Rubble4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.3, 5)
+mesh = SubResource("BoxMesh_rubble")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- ELEVATED PLATFORMS ---
+[node name="Platform1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, -10)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Platform2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 10)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- EXIT PORTAL (appears after boss defeat) ---
+[node name="ExitPortal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -18)
+visible = false
+monitoring = false
+monitorable = false
+
+[node name="PortalFrame" type="MeshInstance3D" parent="ExitPortal"]
+mesh = SubResource("BoxMesh_portal_frame")
+surface_material_override/0 = SubResource("Mat_portal")
+
+[node name="PortalCollision" type="CollisionShape3D" parent="ExitPortal"]
+shape = SubResource("BoxMesh_portal_frame")
+
+; --- PLAYER SPAWN ---
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -15)
+
+; --- FINAL BOSS ---
+[node name="FinalBoss" parent="." instance=ExtResource("1_boss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 10)
+
+; --- LIGHTING ---
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 15, 0)
+light_color = Color(0.6, 0.15, 0.08, 1)
+light_energy = 2.2
+shadow_enabled = true
+
+[node name="OmniLight_Center" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+light_color = Color(0.5, 0.1, 0.05, 1)
+light_energy = 5.0
+omni_range = 40.0
+omni_attenuation = 0.25
+
+[node name="OmniLight_Fire1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 12)
+light_color = Color(1.0, 0.3, 0.0, 1)
+light_energy = 3.0
+omni_range = 15.0
+omni_attenuation = 0.4
+
+[node name="OmniLight_Fire2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2, -12)
+light_color = Color(1.0, 0.3, 0.0, 1)
+light_energy = 3.0
+omni_range = 15.0
+omni_attenuation = 0.4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_l7")

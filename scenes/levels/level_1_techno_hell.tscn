@@ -1,0 +1,226 @@
+[gd_scene load_steps=17 format=3 uid="uid://level1_techno_hell"]
+
+[ext_resource type="PackedScene" uid="uid://enemy_soldier_scene" path="res://scenes/enemies/enemy_soldier.tscn" id="1_soldier"]
+[ext_resource type="PackedScene" uid="uid://enemy_spider_mine_scene" path="res://scenes/enemies/enemy_spider_mine.tscn" id="2_spider_mine"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(30, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(30, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+size = Vector3(1, 4, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(4, 0.3, 4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_portal"]
+height = 3.0
+top_radius = 1.0
+bottom_radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.08, 0.06, 0.06, 1)
+roughness = 0.6
+metallic = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_wall"]
+albedo_color = Color(0.12, 0.08, 0.1, 1)
+roughness = 0.8
+metallic = 0.4
+emission_enabled = true
+emission = Color(0.05, 0.01, 0.01, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_lava"]
+albedo_color = Color(0.9, 0.2, 0.02, 1)
+roughness = 0.3
+emission_enabled = true
+emission = Color(1.0, 0.3, 0.0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_portal"]
+albedo_color = Color(0.3, 0.0, 0.5, 0.6)
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.5, 0.0, 1.0, 1)
+emission_energy_multiplier = 3.0
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat_l1"]
+sky_top_color = Color(0.6, 0.04, 0.01, 1)
+sky_horizon_color = Color(0.25, 0.01, 0.01, 1)
+ground_horizon_color = Color(0.08, 0.01, 0.01, 1)
+ground_bottom_color = Color(0.03, 0.0, 0.0, 1)
+
+[sub_resource type="Sky" id="Sky_l1"]
+sky_material = SubResource("SkyMat_l1")
+
+[sub_resource type="Environment" id="Env_l1"]
+background_mode = 2
+sky = SubResource("Sky_l1")
+ambient_light_source = 3
+ambient_light_color = Color(0.3, 0.08, 0.04, 1)
+ambient_light_energy = 0.4
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 0.5
+glow_bloom = 0.4
+fog_enabled = true
+fog_mode = 1
+fog_density = 0.008
+fog_light_color = Color(0.8, 0.15, 0.05, 1)
+adjustments_enabled = true
+adjustments_contrast = 1.2
+
+[node name="Level1" type="Node3D"]
+
+; --- FLOOR ---
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_floor")
+
+; --- WALLS ---
+[node name="WallNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 15)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -15)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallEast" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="WallWest" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, -0.5)
+rotation_degrees = Vector3(0, 90, 0)
+mesh = SubResource("BoxMesh_wall")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- LAVA RIVERS (decorative) ---
+[node name="LavaNorth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 13)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_lava")
+
+[node name="LavaSouth" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -13)
+mesh = SubResource("PlaneMesh_floor")
+surface_material_override/0 = SubResource("Mat_lava")
+
+; --- METAL PLATFORMS ---
+[node name="Platform1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.5, 4)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Platform2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.5, -3)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Platform3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, -8)
+mesh = SubResource("BoxMesh_platform")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- PILLARS ---
+[node name="Pillar1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 10)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Pillar2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 10)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Pillar3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, -10)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="Pillar4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, -10)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_wall")
+
+; --- SECRET: false wall with health pack ---
+[node name="SecretWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.5, 14.8)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_wall")
+
+[node name="SecretRoom" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 17)
+
+[node name="HealthPickup" type="Area3D" parent="SecretRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="HealthMesh" type="MeshInstance3D" parent="SecretRoom/HealthPickup"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_pillar")
+surface_material_override/0 = SubResource("Mat_lava")
+
+[node name="HealthCollision" type="CollisionShape3D" parent="SecretRoom/HealthPickup"]
+shape = SubResource("BoxMesh_pillar")
+
+; --- EXIT PORTAL ---
+[node name="ExitPortal" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
+monitoring = false
+monitorable = false
+
+[node name="PortalMesh" type="MeshInstance3D" parent="ExitPortal"]
+mesh = SubResource("CylinderMesh_portal")
+surface_material_override/0 = SubResource("Mat_portal")
+
+[node name="PortalCollision" type="CollisionShape3D" parent="ExitPortal"]
+shape = SubResource("BoxMesh_pillar")
+
+; --- PLAYER SPAWN ---
+[node name="PlayerSpawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+
+; --- ENEMIES ---
+[node name="Soldier1" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 5)
+
+[node name="Soldier2" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="Soldier3" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -5)
+
+[node name="Soldier4" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -5)
+
+[node name="Soldier5" parent="." instance=ExtResource("1_soldier")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SpiderMine1" parent="." instance=ExtResource("2_spider_mine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 8)
+
+; --- LIGHTING ---
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+light_color = Color(0.9, 0.35, 0.2, 1)
+light_energy = 1.8
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+light_color = Color(1.0, 0.3, 0.05, 1)
+light_energy = 2.0
+omni_range = 20.0
+omni_attenuation = 0.5
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env_l1")

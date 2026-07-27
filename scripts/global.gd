@@ -69,3 +69,14 @@ func get_style_letter() -> String:
         3: return "A"
         4: return "S"
         _: return "U"
+
+
+# Loading screen signals
+signal loading_screen_requested
+signal loading_screen_hidden
+
+func emit_loading_screen() -> void:
+    loading_screen_requested.emit()
+
+func hide_loading_screen() -> void:
+    loading_screen_hidden.emit()
