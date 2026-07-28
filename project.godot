@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 Global="*res://scripts/global.gd"
 LevelManager="*res://scripts/level_manager.gd"
+DialogueManager="*res://scripts/story/dialogue_manager.gd"
 
 [display]
 

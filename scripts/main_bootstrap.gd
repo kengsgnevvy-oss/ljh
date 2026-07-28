@@ -10,9 +10,16 @@ var _cutscene_player: CanvasLayer = null
 var _pause_menu: CanvasLayer = null
 var _current_menu: CanvasLayer = null
 
+var _pending_new_game: bool = false
+
 
 func _ready() -> void:
 	_preload_ui_scenes()
+	
+	# Connect to DialogueManager signals
+	if DialogueManager:
+		DialogueManager.game_intro_finished.connect(_on_game_intro_finished)
+		DialogueManager.ending_finished.connect(_on_ending_finished)
 	
 	# Show main menu first
 	_show_main_menu()
@@ -78,6 +85,39 @@ func _show_pause_menu() -> void:
 	_pause_menu = load("res://scenes/ui/pause_menu.tscn").instantiate()
 	_pause_menu.name = "PauseMenu"
 	get_tree().root.add_child(_pause_menu)
+
+
+func request_new_game() -> void:
+	# Called from main menu when "New Game" is pressed
+	Global.reset_game()
+	_pending_new_game = true
+	
+	if _current_menu:
+		_current_menu.queue_free()
+		_current_menu = null
+	
+	if DialogueManager:
+		# Play the game intro — when it finishes, _on_game_intro_finished fires
+		DialogueManager.play_game_intro()
+	else:
+		# Fallback if DialogueManager not available
+		if LevelManager:
+			LevelManager.load_level(0)
+
+
+func _on_game_intro_finished() -> void:
+	if not _pending_new_game:
+		return
+	_pending_new_game = false
+	
+	if LevelManager:
+		LevelManager.load_level(0)
+
+
+func _on_ending_finished() -> void:
+	# Return to main menu after ending/credits
+	_show_main_menu()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _on_level_loaded(_level_index: int) -> void:

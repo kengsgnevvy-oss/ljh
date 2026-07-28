@@ -74,6 +74,10 @@ func next_level() -> void:
 		all_levels_completed.emit()
 		return
 
+	# Show transition dialogue: outro of current level, intro of next
+	if DialogueManager:
+		await DialogueManager.play_level_transition(current_level)
+
 	# Show loading screen via Global
 	Global.emit_loading_screen()
 
@@ -103,9 +107,38 @@ func complete_level() -> void:
 					portal.monitoring = true
 					portal.monitorable = true
 		else:
-			# No exit portal found, auto-advance after brief delay
-			await get_tree().create_timer(2.0).timeout
-			next_level()
+			# No exit portal found, check if this is the last level
+			if is_last_level():
+				await get_tree().create_timer(2.0).timeout
+				_trigger_game_ending()
+			else:
+				await get_tree().create_timer(2.0).timeout
+				next_level()
+
+
+func _trigger_game_ending() -> void:
+	all_levels_completed.emit()
+	if DialogueManager:
+		await DialogueManager.play_ending()
+	# After ending and credits, return to main menu
+	if Global:
+		Global.emit_loading_screen()
+		await get_tree().create_timer(0.5).timeout
+		Global.hide_loading_screen()
+	
+	_clear_current_level()
+	
+	# Show main menu
+	var menu_scene := load("res://scenes/ui/main_menu.tscn") as PackedScene
+	if menu_scene:
+		var menu := menu_scene.instantiate()
+		menu.name = "MainMenu"
+		get_tree().root.add_child(menu)
+		
+		# Hide HUD
+		var hud := get_tree().root.find_child("HUD", true, false)
+		if hud:
+			hud.visible = false
 
 
 func _clear_current_level() -> void:
