@@ -111,6 +111,12 @@ func unregister_boss() -> void:
     current_boss_name = ""
     ui_boss_encounter_ended.emit()
 
+# Screen shake signal
+signal screen_shake_requested(intensity: float, duration: float)
+
+func apply_screen_shake(intensity: float, duration: float) -> void:
+    screen_shake_requested.emit(intensity, duration)
+
 # Loading screen signals
 signal loading_screen_requested
 signal loading_screen_hidden

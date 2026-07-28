@@ -53,8 +53,15 @@ ambient_light_color = Color(0.12, 0.06, 0.2, 1)
 ambient_light_energy = 0.35
 tonemap_mode = 2
 glow_enabled = true
-glow_intensity = 0.4
-glow_bloom = 0.3
+glow_intensity = 0.6
+glow_bloom = 0.8
+ssao_enabled = true
+ssao_radius = 2.0
+ssao_intensity = 1.5
+ssao_power = 1.5
+ssao_detail = 0.5
+ssao_horizon = 0.06
+ssao_sharpness = 0.98
 fog_enabled = true
 fog_mode = 1
 fog_density = 0.006
@@ -247,6 +254,13 @@ light_color = Color(0.3, 0.15, 0.6, 1)
 light_energy = 3.0
 omni_range = 30.0
 omni_attenuation = 0.3
+
+[node name="OmniLight_Upper" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+light_color = Color(0.4, 0.1, 0.8, 1)
+light_energy = 1.8
+omni_range = 18.0
+omni_attenuation = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Env_l4")

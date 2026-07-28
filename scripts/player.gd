@@ -411,6 +411,7 @@ func take_damage(amount: int) -> void:
     if is_invincible:
         return
     Global.player_health = max(0, Global.player_health - amount)
+    Global.apply_screen_shake(0.08, 0.2)
     if Global.player_health <= 0:
         _die()
 
