@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://cutscene002"]
+
+[ext_resource type="Script" path="res://scripts/ui/cutscene_player.gd" id="1_cut"]
+
+[node name="CutscenePlayer" type="CanvasLayer"]
+script = ExtResource("1_cut")
+layer = 5
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.85)
+visible = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TextLabel" type="Label" parent="CenterContainer"]
+layout_mode = 2
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.8, 1)
+theme_override_font_sizes/font_size = 32
+visible = false
+
+[node name="SkipLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -40.0
+offset_right = -10.0
+offset_bottom = -12.0
+text = "Press FIRE to skip..."
+horizontal_alignment = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+visible = false

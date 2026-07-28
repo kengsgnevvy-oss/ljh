@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://bossbar002"]
+
+[ext_resource type="Script" path="res://scripts/ui/boss_health_bar.gd" id="1_bossbar"]
+
+[node name="BossHealthBar" type="CanvasLayer"]
+script = ExtResource("1_bossbar")
+layer = 2
+
+[node name="BossBarContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 10.0
+offset_right = 250.0
+offset_bottom = 60.0
+visible = false
+
+[node name="BossBarBg" type="ColorRect" parent="BossBarContainer"]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 500.0
+offset_bottom = 50.0
+color = Color(0.08, 0.01, 0.01, 0.9)
+
+[node name="BossNameLabel" type="Label" parent="BossBarContainer"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 4.0
+offset_right = 488.0
+offset_bottom = 24.0
+text = "UNKNOWN BOSS"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.6, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+
+[node name="HealthBar" type="TextureProgressBar" parent="BossBarContainer"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 28.0
+offset_right = 488.0
+offset_bottom = 44.0
+value = 100.0
+tint_under = Color(0.2, 0.05, 0.05, 1)
+tint_progress = Color(1, 0.1, 0.05, 1)
+
+[node name="HealthPercentLabel" type="Label" parent="BossBarContainer"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 28.0
+offset_right = 280.0
+offset_bottom = 44.0
+text = "100%"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+mouse_filter = 2
