@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://blood_spray_effect"]
+[gd_scene load_steps=3 format=3 uid="uid://blood_spray_effect"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_blood"]
 spread = 45.0
@@ -13,6 +13,10 @@ lifetime_max = 0.5
 damping_min = 2.0
 damping_max = 8.0
 
+[sub_resource type="SphereMesh" id="SphereMesh_blood"]
+radius = 0.5
+height = 2.0
+
 [node name="BloodSpray" type="GPUParticles3D"]
 emitting = false
 one_shot = true
@@ -20,5 +24,5 @@ amount = 25
 lifetime = 0.5
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_blood")
-draw_pass_1 = SphereMesh.new()
+draw_pass_1 = SubResource("SphereMesh_blood")
 visibility_aabb = AABB(-3, -3, -3, 6, 6, 6)

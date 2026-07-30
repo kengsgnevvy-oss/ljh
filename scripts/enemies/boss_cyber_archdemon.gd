@@ -1,4 +1,4 @@
-extends BossBase
+extends "res://scripts/enemies/boss_base.gd"
 class_name BossCyberArchdemon
 
 # ============================================================

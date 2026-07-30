@@ -1,4 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://muzzle_flash_effect"]
+[gd_scene load_steps=5 format=3 uid="uid://muzzle_flash_effect"]
+
+[sub_resource type="Gradient" id="Gradient_mf"]
+offsets = PackedFloat32Array(0.0, 1.0)
+colors = PackedColorArray(Color(1, 0.8, 0.2, 1), Color(1, 0.2, 0, 0))
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mf"]
+gradient = SubResource("Gradient_mf")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mf"]
 spread = 15.0
@@ -14,8 +21,8 @@ lifetime_max = 0.15
 emission_shape = 0
 direction = Vector3(0, 0, -1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mf"]
-gradient = Gradient("1,0,Color(1,0.8,0.2,1);1,0,Color(1,0.2,0,0)")
+[sub_resource type="BoxMesh" id="BoxMesh_mf"]
+size = Vector3(1, 1, 1)
 
 [node name="MuzzleFlash" type="GPUParticles3D"]
 emitting = false
@@ -24,5 +31,5 @@ amount = 12
 lifetime = 0.15
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_mf")
-draw_pass_1 = BoxMesh.new()
+draw_pass_1 = SubResource("BoxMesh_mf")
 visibility_aabb = AABB(-0.5, -0.5, -0.5, 1, 1, 1)
